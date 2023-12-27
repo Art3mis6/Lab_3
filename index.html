@@ -1,23 +1,10 @@
-
-<script>
-  AFRAME.registerComponent('dynamic-body', {
-    init: function () {
-      this.el.addEventListener('collide', this.handleCollision.bind(this));
-    },
-    handleCollision: function (event) {
-      // Обробка удару, наприклад, зміна кольору кульки
-      this.el.setAttribute('material', 'color', '#00FFFF');
-    }
-  });
-</script>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
-  <script src="https://cdn.rawgit.com/jeromeetienne/AR.js/2.3.3/aframe/build/aframe-ar.js"></script>
+  <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar-nft.js"></script>
 </head>
 <body>
   <a-scene embedded arjs="trackingMethod: best;">
@@ -29,17 +16,24 @@
       <!-- Площина для кульки -->
       <a-plane position="0 0 0" rotation="-90 0 0" width="5" height="5" color="#7BC8A4"></a-plane>
       
-      <!-- Гумова кулька -->
-      <a-sphere position="0 1.25 -2" radius="1" color="#EF2D5E" segments-height="20"></a-sphere>
+      <!-- Гумова кулька з текстурою -->
+      <a-sphere position="0 1.25 -2" radius="1" color="#EF2D5E" segments-height="20" dynamic-body material="hardwood2_roughness.jpg"></a-sphere>
     </a-marker>
     
     <!-- Основна камера для погляду збоку на сцену -->
     <a-entity camera position="0 3 8" rotation="-20 0 0" look-controls="enabled: false;"></a-entity>
   </a-scene>
+
+  <script>
+    AFRAME.registerComponent('dynamic-body', {
+      init: function () {
+        this.el.addEventListener('collide', this.handleCollision.bind(this));
+      },
+      handleCollision: function (event) {
+        // Обробка удару, наприклад, зміна кольору кульки
+        this.el.setAttribute('material', 'color', '#00FFFF');
+      }
+    });
+  </script>
 </body>
 </html>
-
-<a-sphere position="0 1.25 -2" radius="1" color="#EF2D5E" segments-height="20" dynamic-body></a-sphere>
-
-<a-plane position="0 0 0" rotation="-90 0 0" width="5" height="5" color="#7BC8A4" static-body></a-plane>
-
